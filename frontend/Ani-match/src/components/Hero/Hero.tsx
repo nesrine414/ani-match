@@ -1,6 +1,7 @@
 import React from "react";
 import "./Hero.css";
 import userIcon from "../../assets/user-icon.png";
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   return (
@@ -9,15 +10,11 @@ const Hero: React.FC = () => {
       {/* overlay */}
       <div className="hero-overlay"></div>
 
-      {/* user icon */}
+      {/* user icon (links to login) */}
       <div className="hero-user">
-        <button
-          type="button"
-          className="user-btn"
-          onClick={() => alert("User icon clicked")}
-        >
+        <Link to="/login" className="user-btn" aria-label="Login">
           <img src={userIcon} alt="User profile" />
-        </button>
+        </Link>
       </div>
 
       {/* content */}

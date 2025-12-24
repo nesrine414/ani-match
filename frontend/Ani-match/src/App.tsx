@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import Adopt from "./pages/Adopt/Adopt";
 import About from "./pages/About/About";
+import LoginPage from "./pages/Login/Login";
 
 import "./App.css";
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/adopt" element={<Adopt />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
 
       <Footer />
