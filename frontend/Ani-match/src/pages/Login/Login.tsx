@@ -1,6 +1,7 @@
 import "./Login.css";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
 import { useState, ReactElement } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
@@ -70,12 +71,12 @@ function LoginPage(): ReactElement {
 
           <div className="buttons">
             <button className="fb">Sign In with Facebook</button>
-            <p><button className="email" onClick={handleLogin}>Sign In with Email</button></p>
+            <p><button className="email" onClick={handleLogin}>  Sign   In         </button></p>
             
           </div>
 
           <p className="register">
-            Not signed in? <a href="#">Register</a>
+            Not signed in? <Link to="/signup">Register</Link>
           </p>
         </div>
       </div>
