@@ -1,0 +1,11 @@
+.home {
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 60px 0;
+}
