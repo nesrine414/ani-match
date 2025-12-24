@@ -9,7 +9,9 @@ interface CategoryCardProps {
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, image }) => {
   return (
     <div className="category-card">
-      <img src={image} alt={title} className="category-image" />
+      <div className="category-image-wrapper">
+        <img src={image} alt={title} className="category-image" />
+      </div>
       <h3 className="category-title">{title}</h3>
     </div>
   );
