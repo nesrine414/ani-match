@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import Adopt from "./pages/Adopt/Adopt";
 import About from "./pages/About/About";
 import LoginPage from "./pages/Login/Login";
+import AniMatchSignup from "./pages/Signup/Signup";
 
 import "./App.css";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/adopt" element={<Adopt />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<AniMatchSignup />} />
       </Routes>
 
       <Footer />
