@@ -1,0 +1,155 @@
+/* HEADER */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  padding: 18px 48px;
+  background: #3098B7;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* LEFT */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LOGO IMAGE */
+.brand img {
+  width: 85px;   /* ← بدّل بين 60 و 80 كان تحب */
+  height: auto;
+  display: block;
+}
+
+/* TITLE */
+.title {
+  font-family: "Knewave", cursive;
+  font-size: 32px;
+  color: white;
+  line-height: 1;
+}
+
+
+/* CENTER NAV */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+/* underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ADOPT */
+.nav-link.highlight {
+  background: white;
+  color: #3098B7;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-weight: 600;
+}
+
+.nav-link.highlight::after {
+  display: none;
+}
+
+/* RIGHT */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+}
+
+.social-icons a {
+  color: white;
+}
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background: white;
+  border-radius: 4px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #3098B7;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+    transform: translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease;
+  }
+
+  .nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .social-icons {
+    display: none;
+  }
+}
