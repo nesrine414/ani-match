@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
 import "./Signup.css";
@@ -23,49 +22,9 @@ const AniMatchSignup: React.FC = () => {
     }));
   };
 
-  const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-
-    // basic validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-    if (!formData.agreeToTerms) {
-      setError('You must agree to the terms');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch('http://localhost:5000/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data?.message || 'Signup failed');
-        setLoading(false);
-        return;
-      }
-
-      // store token if returned and redirect to home
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
-      navigate('/login');
-    } catch (err) {
-      setError('Network error');
-    } finally {
-      setLoading(false);
-    }
+    console.log('Form submitted:', formData);
   };
 
   const handleSocialSignup = (provider: string) => {
@@ -173,10 +132,7 @@ const AniMatchSignup: React.FC = () => {
               </label>
             </div>
 
-            <button type="submit" className="email" disabled={loading}>
-              {loading ? 'Signing up…' : 'Sign up'}
-            </button>
-            {error && <p className="error" style={{ color: 'salmon', marginTop: 8 }}>{error}</p>}
+            <button type="submit" className="email">Sign up</button>
           </form>
 
           <div className="text-center my-6">

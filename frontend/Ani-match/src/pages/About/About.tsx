@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./About.css";
 import logo from "../../assets/logo.svg";
 
 const About: React.FC = () => {
   const navigate = useNavigate();
+  const [info, setInfo] = useState<{ mission?: string } | null>(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/about')
+      .then((r) => r.json())
+      .then(setInfo)
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="about-page">
@@ -40,6 +48,7 @@ const About: React.FC = () => {
         <h1 className="about-title">Who are we?</h1>
 
         <div className="about-card">
+          {info?.mission && <p className="about-mission">{info.mission}</p>}
           <div className="about-text-content">
             <p>
               At <strong>Ani-Match</strong>, we are a team of passionate animal lovers,
