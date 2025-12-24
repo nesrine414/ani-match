@@ -8,6 +8,7 @@ const Adopt: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState("");
+  const [serverMessage, setServerMessage] = useState<string | null>(null);
 
   // ⏳ Redirect after 3 seconds
   useEffect(() => {
@@ -19,6 +20,14 @@ const Adopt: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [submitted, navigate]);
+
+  useEffect(() => {
+    // fetch adopt info
+    fetch('http://localhost:5000/api/adopt')
+      .then(r => r.json())
+      .then(d => setServerMessage(d.instructions || null))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="adopt-page">
@@ -51,8 +60,20 @@ const Adopt: React.FC = () => {
           {!submitted ? (
             <form
               className="adopt-form"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+                const data = {
+                  email,
+                };
+                try {
+                  await fetch('http://localhost:5000/adopt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                  });
+                } catch (err) {
+                  // ignore
+                }
                 setSubmitted(true);
               }}
             >
