@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       {/* LEFT: LOGO */}
       <div className="header-left">
         <Link to="/" className="brand">
-          <img src={logo} alt="AniMatch Logo" className="logo" />
+          <img src={logo} alt="AniMatch Logo"  />
           <h1 className="title">Ani-Match</h1>
         </Link>
       </div>

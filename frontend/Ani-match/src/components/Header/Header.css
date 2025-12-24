@@ -20,15 +20,28 @@
   text-decoration: none;
 }
 
-.logo {
-  width: 52px;
+/* BRAND */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
+/* LOGO IMAGE */
+.brand img {
+  width: 85px;   /* ← بدّل بين 60 و 80 كان تحب */
+  height: auto;
+  display: block;
+}
+
+/* TITLE */
 .title {
   font-family: "Knewave", cursive;
-  font-size: 30px;
+  font-size: 32px;
   color: white;
+  line-height: 1;
 }
+
 
 /* CENTER NAV */
 .nav {

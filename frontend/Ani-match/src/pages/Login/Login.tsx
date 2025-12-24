@@ -1,12 +1,10 @@
 import "./Login.css";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
 import { useState, ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import LOGOImg from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import DogImg from "../../assets/dogs.png";
-
-
 
 interface LoginResponse {
   token: string;
@@ -14,8 +12,8 @@ interface LoginResponse {
 
 function LoginPage(): ReactElement {
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");   // FIXED
-  // const navigate = useNavigate();
+  const [password, setPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleLogin = async (): Promise<void> => {
     try {
@@ -24,7 +22,7 @@ function LoginPage(): ReactElement {
         password,
       });
 
-      alert("Login successful!  " );
+      alert("Login successful!");
       localStorage.setItem("token", res.data.token);
     } catch (err: unknown) {
       const error = err as any;
@@ -34,10 +32,23 @@ function LoginPage(): ReactElement {
 
   return (
     <div className="page">
+      {/* ===== HEADER UNIFIÉ ===== */}
+      <img src={logo} alt="Ani-match Logo" className="corner-logo" />
       
-
-      <div className="logo">
-        <img src={LOGOImg} alt="Ani-match Logo" />
+      <div
+        className="corner-user"
+        onClick={() => navigate("/login")}
+        title="Login"
+      >
+        <svg width="60" height="60" viewBox="0 0 100 60" fill="none">
+          <g fill="#3098B7">
+            <rect x="0" y="15" width="25" height="3" rx="1.5" />
+            <rect x="0" y="25" width="25" height="3" rx="1.5" />
+            <rect x="0" y="35" width="25" height="3" rx="1.5" />
+            <circle cx="65" cy="20" r="15" />
+            <path d="M45 55C45 42 52 38 65 38C78 38 85 42 85 55V60H45V55Z" />
+          </g>
+        </svg>
       </div>
 
       <div className="login-container">
@@ -71,8 +82,7 @@ function LoginPage(): ReactElement {
 
           <div className="buttons">
             <button className="fb">Sign In with Facebook</button>
-            <p><button className="email" onClick={handleLogin}>  Sign   In         </button></p>
-            
+            <p><button className="email" onClick={handleLogin}>Sign In</button></p>
           </div>
 
           <p className="register">

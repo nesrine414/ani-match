@@ -165,3 +165,50 @@ body {
 .myfont {
   font-family: 'MyFont', cursive;
 }
+/* Ajoutez ces styles à votre Login.css et Signup.css */
+
+/* ===== HEADER UNIFIÉ ===== */
+.page {
+  position: relative;
+  min-height: 100vh;
+}
+
+.corner-logo {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  width: 140px;
+  z-index: 10;
+}
+
+.corner-user {
+  position: absolute;
+  top: 35px;
+  right: 40px;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.corner-user:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .corner-logo {
+    top: 20px;
+    left: 20px;
+    width: 100px;
+  }
+
+  .corner-user {
+    top: 25px;
+    right: 20px;
+  }
+
+  .corner-user svg {
+    width: 50px;
+    height: 50px;
+  }
+}
