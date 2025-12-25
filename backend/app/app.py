@@ -1,31 +1,30 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-import os
-from dotenv import load_dotenv
+import sys
+# ensure backend/ is on path so we can import api_* modules located next to app/
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-load_dotenv()
-print("=" * 50)
-print(f"Username: {os.getenv('DB_USERNAME')}")
-print(f"Password: {os.getenv('DB_PASSWORD')}")
-print(f"Host: {os.getenv('DB_HOST')}")
-print(f"Database: {os.getenv('DB_NAME')}")
-print("=" * 50)
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../frontend/Ani-match/dist")
 CORS(app)
 
-# Database configuration
-# Prefer explicit DATABASE_URL, otherwise fall back to MySQL if env vars set,
-# otherwise use a local SQLite file for development to avoid requiring a DB server.
-db_url = os.getenv('DATABASE_URL')
-if not db_url:
-    db_username = os.getenv('DB_USERNAME')
-    db_password = os.getenv('DB_PASSWORD')
-    db_host = os.getenv('DB_HOST')
-    db_name = os.getenv('DB_NAME')
-    if db_username and db_password and db_host and db_name:
-        db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}/{db_name}"
+# register API blueprints
+from api_home import bp as home_bp
+from api_about import bp as about_bp
+from api_adopt import bp as adopt_bp
+from api_auth import bp as auth_bp
+
+app.register_blueprint(home_bp)
+app.register_blueprint(about_bp)
+app.register_blueprint(adopt_bp)
+app.register_blueprint(auth_bp)
+
+
+# 👉 Route pour servir la page React
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + "/" + path):
+        return send_from_directory(app.static_folder, path)
     else:
         # use a local sqlite file inside backend folder for development
         db_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'dev.db'))

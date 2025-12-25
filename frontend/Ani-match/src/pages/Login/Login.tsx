@@ -1,11 +1,10 @@
 import "./Login.css";
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
 import { useState, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
-
+import Swal from "sweetalert2";
 
 
 interface LoginResponse {
@@ -14,28 +13,37 @@ interface LoginResponse {
 
 function LoginPage(): ReactElement {
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");   // FIXED
-  // const navigate = useNavigate();
+  const [password, setPassword] = useState<string>("");
 
   const handleLogin = async (): Promise<void> => {
-    try {
-      const res = await axios.post<LoginResponse>("http://localhost:5000/login", {
-        email,
-        password,
-      });
+  try {
+    const res = await axios.post("http://localhost:5000/api/login", {
+      email,
+      password,
+    });
 
-      alert("Login successful!  " );
-      localStorage.setItem("token", res.data.token);
-    } catch (err: unknown) {
-      const error = err as any;
-      alert(error?.response?.data?.message || "Error");
-    }
-  };
+    Swal.fire({
+      icon: "success",
+      title: "Welcome back! 🐶",
+      text: "Login successful!",
+      confirmButtonColor: "#0d9488",
+    });
+
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+
+  } catch (err: any) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops 😕",
+      text: err?.response?.data?.message || "Something went wrong",
+      confirmButtonColor: "#dc2626",
+    });
+  }
+};
+
 
   return (
     <div className="page">
-      
-
       <div className="logo">
         <img src={LOGOImg} alt="Ani-match Logo" />
       </div>
@@ -53,7 +61,7 @@ function LoginPage(): ReactElement {
             type="text"
             placeholder="username or email"
             value={email}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <label>Password</label>
@@ -61,7 +69,7 @@ function LoginPage(): ReactElement {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
           <div className="remember">
@@ -71,8 +79,9 @@ function LoginPage(): ReactElement {
 
           <div className="buttons">
             <button className="fb">Sign In with Facebook</button>
-            <p><button className="email" onClick={handleLogin}>  Sign   In         </button></p>
-            
+            <button className="email" onClick={handleLogin}>
+              Sign In
+            </button>
           </div>
 
           <p className="register">

@@ -1,30 +1,84 @@
 from flask import Blueprint, request, jsonify
-import secrets
+import mysql.connector
+from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint('auth', __name__)
 
+def get_db():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="YOUR_MYSQL_PASSWORD",
+        database="animatch_db"
+    )
 
-@bp.route('/login', methods=['POST'])
-def login():
-    payload = request.get_json() or {}
-    email = payload.get('email')
-    password = payload.get('password')
-    # stubbed authentication: accept any non-empty credentials
-    if email and password:
-        token = secrets.token_hex(16)
-        return jsonify({'token': token})
-    return jsonify({'message': 'Invalid credentials'}), 401
-
-
+# ===== SIGNUP =====
 @bp.route('/signup', methods=['POST'])
 def signup():
-    payload = request.get_json() or {}
-    email = payload.get('email')
-    password = payload.get('password')
-    fullName = payload.get('fullName')
-    if not email or not password:
-        return jsonify({'message': 'email and password required'}), 400
+    data = request.get_json() or {}
 
-    # In a real app you'd validate and persist the user. Here we return a token to simulate auto-login.
-    token = secrets.token_hex(16)
-    return jsonify({'status': 'created', 'user': {'email': email, 'fullName': fullName}, 'token': token}), 201
+    full_name = data.get('fullName')
+    email = data.get('email')
+    password = data.get('password')
+    location = data.get('location')
+    phone = data.get('phone')
+
+    if not email or not password:
+        return jsonify({'message': 'Missing fields'}), 400
+
+    hashed_password = generate_password_hash(password)
+
+    db = get_db()
+    cursor = db.cursor()
+
+    try:
+        cursor.execute("""
+            INSERT INTO users (full_name, email, password, location, phone)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (full_name, email, hashed_password, location, phone))
+
+        db.commit()
+    except mysql.connector.Error:
+        return jsonify({'message': 'Email already exists'}), 409
+    finally:
+        cursor.close()
+        db.close()
+
+    return jsonify({'message': 'Account created successfully'}), 201
+
+
+# ===== LOGIN =====
+@bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json() or {}
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({'message': 'Missing fields'}), 400
+
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+    user = cursor.fetchone()
+
+    cursor.close()
+    db.close()
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 401
+
+    if not check_password_hash(user['password'], password):
+        return jsonify({'message': 'Wrong password'}), 401
+
+    return jsonify({
+        'message': 'Login successful',
+        'user': {
+            'id': user['id'],
+            'full_name': user['full_name'],
+            'email': user['email'],
+            'location': user['location'],
+            'phone': user['phone']
+        }
+    }), 200
