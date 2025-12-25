@@ -1,15 +1,26 @@
 from flask import Blueprint, request, jsonify
-import mysql.connector
+import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 bp = Blueprint('auth', __name__)
 
+# Configuration depuis .env
+AUTH_DB_USERNAME = os.getenv('AUTH_DB_USERNAME', 'root')
+AUTH_DB_PASSWORD = os.getenv('AUTH_DB_PASSWORD', '')
+AUTH_DB_HOST = os.getenv('AUTH_DB_HOST', 'localhost')
+AUTH_DB_NAME = os.getenv('AUTH_DB_NAME', 'animatch_db')
+
 def get_db():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="YOUR_MYSQL_PASSWORD",
-        database="animatch_db"
+    return pymysql.connect(
+        host=AUTH_DB_HOST,
+        user=AUTH_DB_USERNAME,
+        password=AUTH_DB_PASSWORD,
+        database=AUTH_DB_NAME,
+        cursorclass=pymysql.cursors.DictCursor
     )
 
 # ===== SIGNUP =====
@@ -38,7 +49,7 @@ def signup():
         """, (full_name, email, hashed_password, location, phone))
 
         db.commit()
-    except mysql.connector.Error:
+    except pymysql.err.IntegrityError:
         return jsonify({'message': 'Email already exists'}), 409
     finally:
         cursor.close()
@@ -58,7 +69,7 @@ def login():
         return jsonify({'message': 'Missing fields'}), 400
 
     db = get_db()
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
     cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
     user = cursor.fetchone()
