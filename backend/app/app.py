@@ -1,35 +1,31 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import sys
+import os
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 # ensure backend/ is on path so we can import api_* modules located next to app/
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 app = Flask(__name__, static_folder="../frontend/Ani-match/dist")
 CORS(app)
 
-# register API blueprints
-from api_home import bp as home_bp
-from api_about import bp as about_bp
-from api_adopt import bp as adopt_bp
-from api_auth import bp as auth_bp
-
-app.register_blueprint(home_bp)
-app.register_blueprint(about_bp)
-app.register_blueprint(adopt_bp)
-app.register_blueprint(auth_bp)
+# Note: API blueprints are registered after models and DB are initialized
 
 
 # 👉 Route pour servir la page React
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve(path):
-    if path != "" and os.path.exists(app.static_folder + "/" + path):
+    full_path = os.path.join(app.static_folder, path)
+    if path != "" and os.path.exists(full_path):
         return send_from_directory(app.static_folder, path)
-    else:
-        # use a local sqlite file inside backend folder for development
-        db_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'dev.db'))
-        os.makedirs(os.path.dirname(db_file), exist_ok=True)
-        db_url = f"sqlite:///{db_file}"
+    return send_from_directory(app.static_folder, 'index.html')
+
+# use a local sqlite file inside backend folder for development
+db_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'dev.db'))
+os.makedirs(os.path.dirname(db_file), exist_ok=True)
+db_url = f"sqlite:///{db_file}"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -197,26 +193,8 @@ def update_adoption_status(adoption_id):
     
     return jsonify({'message': 'Adoption status updated successfully'})
 
-@app.route('/api/search', methods=['GET'])
-def search_pets():
-    """Search pets by name or breed"""
-    query = request.args.get('q', '')
-    
-    pets = Pet.query.filter(
-        db.or_(
-            Pet.name.ilike(f'%{query}%'),
-            Pet.breed.ilike(f'%{query}%')
-        ),
-        Pet.adoption_status == 'available'
-    ).all()
-    
-    return jsonify([{
-        'id': pet.id,
-        'name': pet.name,
-        'species': pet.species,
-        'breed': pet.breed,
-        'image_url': pet.image_url
-    } for pet in pets])
+# Search endpoint moved to `backend/api_search.py` as a blueprint to keep
+# API routes modular and avoid circular imports.
 
 # Database initialization (only auto-create for SQLite to avoid requiring external DB credentials)
 with app.app_context():
@@ -227,6 +205,19 @@ with app.app_context():
             app.logger.info('Skipping automatic create_all for non-SQLite database.')
     except Exception as e:
         app.logger.error(f'Could not initialize database schema: {e}')
+
+# register API blueprints (import after models to avoid circular imports)
+from api_home import bp as home_bp
+from api_about import bp as about_bp
+from api_adopt import bp as adopt_bp
+from api_auth import bp as auth_bp
+from api_search import bp as search_bp
+
+app.register_blueprint(home_bp)
+app.register_blueprint(about_bp)
+app.register_blueprint(adopt_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(search_bp)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
