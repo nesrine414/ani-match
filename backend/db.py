@@ -1,9 +1,10 @@
-import mysql.connector
+import pymysql
 
 def get_db():
-    return mysql.connector.connect(
+    return pymysql.connect(
         host="localhost",
         user="root",
-        password="ness150703**",  # بدّلها
-        database="animatch"         # اسم الداتابيز متاعك
+        password="ness150703**",
+        database="animatch_db",
+        cursorclass=pymysql.cursors.DictCursor
     )

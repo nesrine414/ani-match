@@ -6,90 +6,121 @@ import os
 
 load_dotenv()
 
-bp = Blueprint('auth', __name__)
+bp = Blueprint("auth", __name__, url_prefix="/api")
 
-# Configuration depuis .env
-AUTH_DB_USERNAME = os.getenv('AUTH_DB_USERNAME', 'root')
-AUTH_DB_PASSWORD = os.getenv('AUTH_DB_PASSWORD', '')
-AUTH_DB_HOST = os.getenv('AUTH_DB_HOST', 'localhost')
-AUTH_DB_NAME = os.getenv('AUTH_DB_NAME', 'animatch_db')
 
 def get_db():
     return pymysql.connect(
-        host=AUTH_DB_HOST,
-        user=AUTH_DB_USERNAME,
-        password=AUTH_DB_PASSWORD,
-        database=AUTH_DB_NAME,
+        host="localhost",
+        user="root",
+        password="ness150703**",
+        database="animatch_db",
         cursorclass=pymysql.cursors.DictCursor
     )
 
-# ===== SIGNUP =====
-@bp.route('/signup', methods=['POST'])
+
+@bp.route("/signup", methods=["POST"])
 def signup():
-    data = request.get_json() or {}
+    db = None
+    cursor = None
+    
+    data = request.json
 
-    full_name = data.get('fullName')
-    email = data.get('email')
-    password = data.get('password')
-    location = data.get('location')
-    phone = data.get('phone')
+    full_name = data.get("fullName")
+    email = data.get("email")
+    password = data.get("password")
+    location = data.get("location")
+    phone_number = data.get("phoneNumber")
 
-    if not email or not password:
-        return jsonify({'message': 'Missing fields'}), 400
+    if not full_name or not email or not password:
+        return jsonify({"message": "Missing fields"}), 400
 
     hashed_password = generate_password_hash(password)
 
-    db = get_db()
-    cursor = db.cursor()
-
     try:
-        cursor.execute("""
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute(
+            """
             INSERT INTO users (full_name, email, password, location, phone)
             VALUES (%s, %s, %s, %s, %s)
-        """, (full_name, email, hashed_password, location, phone))
+            """,
+            (full_name, email, hashed_password, location, phone_number)
+        )
 
         db.commit()
-    except pymysql.err.IntegrityError:
-        return jsonify({'message': 'Email already exists'}), 409
+        return jsonify({"message": "Signup successful"}), 201
+
+    except pymysql.IntegrityError as e:
+        if "Duplicate entry" in str(e):
+            return jsonify({"message": "Email already exists"}), 409
+        return jsonify({"message": "Database error"}), 500
+        
+    except Exception as e:
+        print("ERROR:", e)
+        return jsonify({"message": "Signup failed"}), 500
+
     finally:
-        cursor.close()
-        db.close()
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
 
-    return jsonify({'message': 'Account created successfully'}), 201
 
-
-# ===== LOGIN =====
-@bp.route('/login', methods=['POST'])
+# ========== NOUVELLE ROUTE LOGIN ==========
+@bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json() or {}
-    email = data.get('email')
-    password = data.get('password')
+    db = None
+    cursor = None
+    
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
 
     if not email or not password:
-        return jsonify({'message': 'Missing fields'}), 400
+        return jsonify({"message": "Email and password required"}), 400
 
-    db = get_db()
-    cursor = db.cursor()
+    try:
+        db = get_db()
+        cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    user = cursor.fetchone()
+        # Chercher l'utilisateur par email
+        cursor.execute(
+            "SELECT * FROM users WHERE email = %s",
+            (email,)
+        )
+        
+        user = cursor.fetchone()
 
-    cursor.close()
-    db.close()
+        # Vérifier si l'utilisateur existe
+        if not user:
+            return jsonify({"message": "Invalid email or password"}), 401
 
-    if not user:
-        return jsonify({'message': 'User not found'}), 401
+        # Vérifier le mot de passe
+        if not check_password_hash(user['password'], password):
+            return jsonify({"message": "Invalid email or password"}), 401
 
-    if not check_password_hash(user['password'], password):
-        return jsonify({'message': 'Wrong password'}), 401
-
-    return jsonify({
-        'message': 'Login successful',
-        'user': {
-            'id': user['id'],
-            'full_name': user['full_name'],
-            'email': user['email'],
-            'location': user['location'],
-            'phone': user['phone']
+        # Login réussi - renvoyer les infos de l'utilisateur (sans le mot de passe)
+        user_data = {
+            "id": user['id'],
+            "full_name": user['full_name'],
+            "email": user['email'],
+            "location": user.get('location'),
+            "phone": user.get('phone')
         }
-    }), 200
+
+        return jsonify({
+            "message": "Login successful",
+            "user": user_data
+        }), 200
+
+    except Exception as e:
+        print("ERROR:", e)
+        return jsonify({"message": "Login failed"}), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
