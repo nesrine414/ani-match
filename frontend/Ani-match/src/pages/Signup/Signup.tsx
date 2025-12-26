@@ -1,42 +1,94 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { CheckCircle } from "lucide-react"; // ou utilisez une autre icône
+
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
 import "./Signup.css";
 
 const AniMatchSignup: React.FC = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    location: '',
-    phoneNumber: '',
-    agreeToTerms: false
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    location: "",
+    phoneNumber: "",
+    agreeToTerms: false,
   });
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-  };
 
-  const handleSocialSignup = (provider: string) => {
-    console.log(`Sign up with ${provider}`);
+    // Validation
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    if (!formData.agreeToTerms) {
+      alert("Please agree to the Terms and Privacy Policy");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/signup", {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        location: formData.location,
+        phoneNumber: formData.phoneNumber,
+      });
+
+      // Afficher le message de succès
+      setShowSuccess(true);
+
+      // Rediriger après 3 secondes
+      setTimeout(() => {
+        navigate("/login"); // ou la route de votre choix
+      }, 3000);
+    } catch (err: any) {
+      alert("❌ Signup failed: " + (err.response?.data?.message || "Unknown error"));
+      console.error(err);
+    }
   };
 
   return (
     <div className="page">
+      {/* Message de succès animé */}
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-modal">
+            <div className="success-icon">
+              <CheckCircle size={48} color="white" strokeWidth={3} />
+            </div>
+            
+            <h2 className="success-title">Welcome! 🎉</h2>
+            <p className="success-subtitle">Signup Successful</p>
+            <p className="success-text">Redirecting to login page...</p>
+          </div>
+        </div>
+      )}
+
+      {/* ===== HEADER ===== */}
       <div className="logo">
         <img src={LOGOImg} alt="Ani-match Logo" />
       </div>
 
+      {/* ===== CONTENT ===== */}
       <div className="login-container">
         <div className="dogs">
           <img src={DogImg} alt="Dogs" />
@@ -46,118 +98,79 @@ const AniMatchSignup: React.FC = () => {
           <h2>Create an account</h2>
 
           <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="fullName">Full name</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Full name</label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleInputChange}
+              required
+            />
 
-            <div>
-              <label htmlFor="email">Email address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Email address</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
 
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
 
-            <div>
-              <label htmlFor="confirmPassword">Confirm Your Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Confirm password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              required
+            />
 
-            <div>
-              <label htmlFor="location">Location</label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Location</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              required
+            />
 
-            <div>
-              <label htmlFor="phoneNumber">Phone number</label>
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            <label>Phone number</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleInputChange}
+              required
+            />
 
             <div className="remember">
               <input
                 type="checkbox"
-                id="agreeToTerms"
                 name="agreeToTerms"
                 checked={formData.agreeToTerms}
                 onChange={handleInputChange}
-                required
               />
-              <label htmlFor="agreeToTerms">
-                I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+              <label>
+                I agree to the <a href="#">Terms</a> and{" "}
+                <a href="#">Privacy Policy</a>
               </label>
             </div>
 
-            <button type="submit" className="email">Sign up</button>
-          </form>
-
-          <div className="text-center my-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-cyan-500 text-white"> OR  </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center space-x-4">
-            <button
-              onClick={() => handleSocialSignup('email')}
-              className="email"
-            >
-               Sign up with Facebook
+            <button type="submit" className="email">
+              Sign up
             </button>
-          </div>
+          </form>
         </div>
       </div>
-
-      
     </div>
   );
 };

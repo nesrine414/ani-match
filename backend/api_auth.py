@@ -8,6 +8,14 @@ load_dotenv()
 
 bp = Blueprint("auth", __name__, url_prefix="/api")
 
+# 🔥 Gestion CORS
+@bp.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+    return response
+
 
 def get_db():
     return pymysql.connect(
@@ -19,8 +27,12 @@ def get_db():
     )
 
 
-@bp.route("/signup", methods=["POST"])
+@bp.route("/signup", methods=["POST", "OPTIONS"])
 def signup():
+    # Gérer OPTIONS pour CORS
+    if request.method == 'OPTIONS':
+        return '', 200
+    
     db = None
     cursor = None
     
@@ -68,9 +80,12 @@ def signup():
             db.close()
 
 
-# ========== NOUVELLE ROUTE LOGIN ==========
-@bp.route("/login", methods=["POST"])
+@bp.route("/login", methods=["POST", "OPTIONS"])
 def login():
+    # Gérer OPTIONS pour CORS
+    if request.method == 'OPTIONS':
+        return '', 200
+    
     db = None
     cursor = None
     
@@ -85,7 +100,6 @@ def login():
         db = get_db()
         cursor = db.cursor()
 
-        # Chercher l'utilisateur par email
         cursor.execute(
             "SELECT * FROM users WHERE email = %s",
             (email,)
@@ -93,15 +107,12 @@ def login():
         
         user = cursor.fetchone()
 
-        # Vérifier si l'utilisateur existe
         if not user:
             return jsonify({"message": "Invalid email or password"}), 401
 
-        # Vérifier le mot de passe
         if not check_password_hash(user['password'], password):
             return jsonify({"message": "Invalid email or password"}), 401
 
-        # Login réussi - renvoyer les infos de l'utilisateur (sans le mot de passe)
         user_data = {
             "id": user['id'],
             "full_name": user['full_name'],

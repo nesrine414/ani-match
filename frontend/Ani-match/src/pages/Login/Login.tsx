@@ -1,40 +1,67 @@
 import "./Login.css";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaUser } from "react-icons/fa";
 import { useState, ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
 
-
-
 interface LoginResponse {
   token: string;
+  message: string;
+  user: {
+    id: number;
+    full_name: string;
+    email: string;
+    location?: string;
+    phone?: string;
+  };
 }
 
 function LoginPage(): ReactElement {
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");   // FIXED
-  // const navigate = useNavigate();
+  const [password, setPassword] = useState<string>("");
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleLogin = async (): Promise<void> => {
-    try {
-      const res = await axios.post<LoginResponse>("http://localhost:5000/login", {
-        email,
-        password,
-      });
+  try {
+    const res = await axios.post<LoginResponse>(
+      "http://localhost:5000/api/login",
+      { email, password }
+    );
 
-      alert("Login successful!  " );
-      localStorage.setItem("token", res.data.token);
-    } catch (err: unknown) {
-      const error = err as any;
-      alert(error?.response?.data?.message || "Error");
-    }
-  };
+    setUserName(res.data.user.full_name);
+    setShowSuccess(true);
+    localStorage.setItem("token", res.data.token);
+
+    setTimeout(() => {
+      setShowSuccess(false);
+      navigate("/"); // 🔥 redirect لصفحة accueil
+    }, 3000);
+
+  } catch (err: unknown) {
+    const error = err as any;
+    alert(error?.response?.data?.message || "Login failed. Please try again.");
+  }
+};
+
 
   return (
     <div className="page">
-      
+      {/* 🎉 MESSAGE DE SUCCÈS */}
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-message">
+            <div className="success-icon">✨</div>
+            <h1>Welcome Back!</h1>
+            <h2>{userName}</h2>
+            <p>🎉 Login Successful 🎉</p>
+            <div className="loading-bar"></div>
+          </div>
+        </div>
+      )}
 
       <div className="logo">
         <img src={LOGOImg} alt="Ani-match Logo" />
@@ -71,8 +98,7 @@ function LoginPage(): ReactElement {
 
           <div className="buttons">
             <button className="fb">Sign In with Facebook</button>
-            <p><button className="email" onClick={handleLogin}>  Sign   In         </button></p>
-            
+            <p><button className="email" onClick={handleLogin}>Sign In</button></p>
           </div>
 
           <p className="register">

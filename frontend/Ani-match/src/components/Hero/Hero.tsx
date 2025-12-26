@@ -1,34 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Hero.css";
 import userIcon from "../../assets/user-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero: React.FC = () => {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && query.trim() !== "") {
+      navigate(`/search?q=${query}`);
+    }
+  };
+
   return (
     <section className="hero-bg">
-
-      {/* overlay */}
       <div className="hero-overlay"></div>
 
-      {/* user icon (links to login) */}
       <div className="hero-user">
-        <Link to="/login" className="user-btn" aria-label="Login">
+        <Link to="/login" className="user-btn">
           <img src={userIcon} alt="User profile" />
         </Link>
       </div>
 
-      {/* content */}
       <div className="hero-content">
         <div className="searchbar">
           <span className="search-icon">🔍</span>
-          <input type="text" placeholder="Search pets..." />
+          <input
+            type="text"
+            placeholder="Search pets..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
         </div>
 
         <h1 className="hero-title">
           Find your new best friend today
         </h1>
       </div>
-
     </section>
   );
 };

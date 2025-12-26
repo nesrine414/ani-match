@@ -13,7 +13,8 @@ import LoginPage from "./pages/Login/Login";
 import AniMatchSignup from "./pages/Signup/Signup";
 import PetProfile from "./pages/PetProfile/PetProfile";
 import PetProfile2 from "./pages/PetProfile2/PetProfile2";
-import Profile from "./pages/Profile/Profile"; // ✅ AJOUTÉ
+import Profile from "./pages/Profile/Profile";
+import SearchResult from "./pages/Search/SearchResult";
 
 import "./App.css";
 
@@ -25,24 +26,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* Cats */}
         <Route path="/homecat" element={<HomePage />} />
-
-        {/* Dogs */}
         <Route path="/homedog" element={<HomeDog />} />
 
-        {/* Other pages */}
+        {/* ✅ SEARCH PAGE */}
+        <Route path="/search" element={<SearchResult />} />
+
         <Route path="/adopt" element={<Adopt />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<AniMatchSignup />} />
 
-        {/* Pet Profiles */}
         <Route path="/pet-profile" element={<PetProfile />} />
         <Route path="/pet-profile-2" element={<PetProfile2 />} />
-
-        {/* User Profile */}
-        <Route path="/profile" element={<Profile />} /> {/* ✅ AJOUTÉ */}
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
       <Footer />
