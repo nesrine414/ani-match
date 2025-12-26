@@ -6,7 +6,14 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 app = Flask(__name__, static_folder="../frontend/Ani-match/dist")
-CORS(app)
+
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # 👉 Route pour servir la page React
 @app.route("/", defaults={"path": ""})
