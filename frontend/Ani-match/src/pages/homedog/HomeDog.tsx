@@ -47,7 +47,7 @@ const pets: Pet[] = [
   },
   {
     id: 2,
-    name: "mimi",
+    name: "bella",
     img:dog2
   },
   {

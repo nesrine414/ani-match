@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./Adopt.css";
 import logo from "../../assets/logo.svg";
 
-
 const Adopt: React.FC = () => {
   const navigate = useNavigate();
 

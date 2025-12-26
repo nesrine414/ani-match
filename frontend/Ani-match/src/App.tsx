@@ -13,7 +13,7 @@ import LoginPage from "./pages/Login/Login";
 import AniMatchSignup from "./pages/Signup/Signup";
 import PetProfile from "./pages/PetProfile/PetProfile";
 import PetProfile2 from "./pages/PetProfile2/PetProfile2";
-import SearchResults from "./pages/Search/SearchResult";
+import Profile from "./pages/Profile/Profile"; // ✅ AJOUTÉ
 
 import "./App.css";
 
@@ -32,15 +32,17 @@ function App() {
         <Route path="/homedog" element={<HomeDog />} />
 
         {/* Other pages */}
-        <Route path="/search" element={<SearchResults />} />
         <Route path="/adopt" element={<Adopt />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<AniMatchSignup />} />
 
-        {/* Pet Profile */}
+        {/* Pet Profiles */}
         <Route path="/pet-profile" element={<PetProfile />} />
-        <Route path="/PetProfile2" element={<PetProfile2 />} />
+        <Route path="/pet-profile-2" element={<PetProfile2 />} />
+
+        {/* User Profile */}
+        <Route path="/profile" element={<Profile />} /> {/* ✅ AJOUTÉ */}
       </Routes>
 
       <Footer />

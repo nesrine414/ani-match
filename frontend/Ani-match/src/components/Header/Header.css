@@ -20,6 +20,13 @@
   text-decoration: none;
 }
 
+/* Keep brand and user avatar on the same row */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* BRAND */
 .brand {
   display: flex;
@@ -152,4 +159,19 @@
   .social-icons {
     display: none;
   }
+}
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 15px;
+  cursor: pointer;
+  border: 2px solid #3594b2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 8px rgba(53, 148, 178, 0.6);
 }
