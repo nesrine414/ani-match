@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { CheckCircle } from "lucide-react"; // ou utilisez une autre icône
 
 import LOGOImg from "../../assets/logo.png";
 import DogImg from "../../assets/dogs.png";
@@ -20,6 +20,8 @@ const AniMatchSignup: React.FC = () => {
     agreeToTerms: false,
   });
 
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -31,58 +33,56 @@ const AniMatchSignup: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validation
     if (formData.password !== formData.confirmPassword) {
-      Swal.fire({
-        icon: "error",
-        title: "Password mismatch ❌",
-        text: "Passwords do not match",
-        confirmButtonColor: "#dc2626",
-      });
+      alert("Passwords do not match!");
       return;
     }
 
     if (!formData.agreeToTerms) {
-      Swal.fire({
-        icon: "warning",
-        title: "Terms required ⚠️",
-        text: "You must agree to the terms",
-        confirmButtonColor: "#ca8a04",
-      });
+      alert("Please agree to the Terms and Privacy Policy");
       return;
     }
 
     try {
-      await axios.post("http://localhost:5000/api/signup", {
+      const res = await axios.post("http://localhost:5000/api/signup", {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
         location: formData.location,
-        phone: formData.phoneNumber,
+        phoneNumber: formData.phoneNumber,
       });
 
-      Swal.fire({
-        icon: "success",
-        title: "Account created 🎉",
-        text: "You can now sign in!",
-        confirmButtonColor: "#0d9488",
-      });
+      // Afficher le message de succès
+      setShowSuccess(true);
 
+      // Rediriger après 3 secondes
       setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Signup failed 😕",
-        text: error?.response?.data?.message || "Something went wrong",
-        confirmButtonColor: "#dc2626",
-      });
+        navigate("/login"); // ou la route de votre choix
+      }, 3000);
+    } catch (err: any) {
+      alert("❌ Signup failed: " + (err.response?.data?.message || "Unknown error"));
+      console.error(err);
     }
   };
 
   return (
     <div className="page">
+      {/* Message de succès animé */}
+      {showSuccess && (
+        <div className="success-overlay">
+          <div className="success-modal">
+            <div className="success-icon">
+              <CheckCircle size={48} color="white" strokeWidth={3} />
+            </div>
+            
+            <h2 className="success-title">Welcome! 🎉</h2>
+            <p className="success-subtitle">Signup Successful</p>
+            <p className="success-text">Redirecting to login page...</p>
+          </div>
+        </div>
+      )}
+
       {/* ===== HEADER ===== */}
       <div className="logo">
         <img src={LOGOImg} alt="Ani-match Logo" />
