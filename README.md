@@ -1,82 +1,151 @@
-AniMatch – Project Documentation
+# 🐾 AniMatch – Project Documentation
 
-1. Branches Overview
+## 📌 Présentation du projet
 
-Ce projet contient 3 branches principales, chacune représentant une interface différente du site :
+**AniMatch** est une plateforme web dédiée à l’adoption d’animaux.  
+Le projet a pour objectif de faciliter la recherche d’animaux à adopter grâce à une interface moderne, intuitive et dynamique, tout en intégrant un système de gestion des utilisateurs.
 
-🔹 1. homepage
+---
 
-Contient l’interface de la page d’accueil
+## 🌿 Branches Overview
 
-Développement Frontend uniquement (React)
+Le projet contient **2 branches principales** :
 
-Composants UI, sections d’accueil, navigation…
+### 🔹 1. main
+Cette branche contient :
+- 📄 Un fichier **README** expliquant :
+  - le fonctionnement du projet  
+  - l’objectif  
+  - la logique globale  
+- 🗄️ **Deux fichiers `.sql`** correspondant aux bases de données utilisées pour le backend  
+- 📁 **Ani-match_web_page** :
+  - contient l’intégralité du projet **frontend et backend**
 
-🔹 2. loginpage
+---
 
-Contient la page de connexion / authentification
+## 🧩 Description du projet
 
-Frontend + Backend
+### 🎨 Interfaces utilisateur modernes
+AniMatch propose une interface moderne et responsive avec les pages suivantes :
 
-Gestion de l’API, traitement des requêtes, sécurité de base
+- Home Page  
+- About Us  
+- Adopt  
+- Sign In  
+- Sign Up  
+- Search Result  
+- Pet Profile  
+- User Profile  
 
-🔹 3. catspage & lora
+Toutes les interfaces sont conçues pour offrir une expérience utilisateur fluide sur **desktop et mobile**.
 
-Interface dédiée à la page des chats
+---
 
-Développement Frontend uniquement (React)
+## 🧱 Choix du framework
 
-Affichage des animaux, cartes, filtres, etc.
+Pour le développement du site web **AniMatch**, nous avons choisi **React.js**.
 
-Ces branches sont séparées afin de faciliter :
+### 🎯 Pourquoi React.js ?
+- ⚡ Haute performance grâce au **Virtual DOM**
+- ♻️ Composants réutilisables facilitant la maintenance
+- 🚀 Développement rapide avec **Vite**
+- 🔧 Adapté aux applications web dynamiques
 
-la maintenance
+---
 
-l’évolution de chaque interface
+## ⚙️ Fonctionnalités développées
 
-le travail en équipe
+### 🔹 Frontend
+- Toutes les pages citées ci-dessus sont **entièrement développées**
+- Navigation fluide entre les pages
+- Design responsive et moderne
 
-📌 2. Choix du framework
+---
 
-Pour le développement du site web AniMatch, nous avons choisi React.js.
+### 🔹 Gestion des données
 
-🎯 Pourquoi ce choix ?
+Le projet utilise **MySQL** avec **deux bases de données** :
 
-⚡ Performance élevée grâce au Virtual DOM
+- 🗄️ `animatchdb`  
+  → utilisée pour :
+  - Sign In
+  - Sign Up
+  - Gestion des utilisateurs
 
-♻️ Composants réutilisables, facilitant la maintenance
+- 🗄️ `animatchsearchdb`  
+  → utilisée pour :
+  - la barre de recherche des animaux dans AniMatch
 
-🚀 Écosystème moderne grâce à Vite pour un développement rapide
+---
 
-🔧 Idéal pour un site dynamique comme AniMatch
+## 🖥️ Backend (Flask – Python)
 
-📌 3. Fonctionnalités développées
-🔹 Interface utilisateur moderne
+### 🔹 Technologies utilisées
+- **Flask (Python)** pour le développement de l’API
+- **MySQL** pour la gestion des données
+- API REST pour la communication avec le frontend
 
-Pages : Accueil, Adoption, Services, Contact…
+### 🔹 Fonctionnalités backend
+Le backend est :
+- ✅ Fonctionnel pour :
+  - le processus de **Sign In**
+  - le processus de **Sign Up**
+  - la **barre de recherche** sur la Home Page
+- ⚠️ Les APIs des autres pages sont déjà créées pour le frontend, mais ne sont pas encore entièrement fonctionnelles
 
-Design responsive (mobile & desktop)
+---
 
+### 🔹 Organisation du backend
+Dans la branche du projet :
 
+- 📁 `backend/`  
+  - contient toutes les APIs développées avec Flask
+- 📁 `app/`  
+  - contient le fichier principal `app.py`
+- 📄 `requirements.txt`  
+  - contient tous les modules nécessaires au fonctionnement du backend
 
-🔹 Gestion des données
+---
 
-Chargement d'informations (images, descriptions…)
+### ▶️ Lancer le backend
 
-Préparation pour une future API d’adoption
+1. Accéder au dossier `app` :
+```bash 
+cd backend/app
+```
+Installer les dépendances :
+```
+pip install -r requirements.txt
+```
 
+Lancer le serveur :
+```
+python app.py
+```
+📌 Le backend fonctionne sur le port 5000 
 
-📌 4. Étapes de lancement du projet
-✔️ Installation
-git clone <lien-du-repo>
+###  🚀 Lancement du projet (Frontend)
+
+```
+git clone <repository-url>
 cd animatch-website
+```
+#✔️ Installation
+```
 npm install
-
-✔️ Lancer en développement
+```
+✔️ Lancer en mode développement
+```
 npm run dev
-
+```
 ✔️ Build production
+```
 npm run build
+```
+👥 Contributeurs
 
-✔️ Prévisualisation
-npm run preview
+@nesrine414
+
+@Amaal122 
+
+@eslem10
