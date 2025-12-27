@@ -96,6 +96,42 @@ Le backend est :
 
 ---
 
+### 🔹 Configuration requise pour faire fonctionner le backend
+
+Pour exécuter correctement le backend, vous devez configurer **deux bases de données locales MySQL** :
+
+#### 1️⃣ Créer les bases de données
+- `animatch_db`  
+- `animatchsearch_db`
+
+#### 2️⃣ Importer les bases de données
+Insérer le contenu des fichiers suivants dans MySQL :
+- `animatch_db.sql` → dans la base `animatch_db`
+- `animatchsearch_db.sql` → dans la base `animatchsearch_db`
+
+#### 3️⃣ Configurer les identifiants MySQL
+Modifier les informations de connexion à la base de données :
+
+- Dans le fichier **`api_auth.py`**  
+  → fonction `get_db()`  
+  - Modifier :
+    - `user`
+    - `password`
+
+- Dans le fichier **`api_search.py`**  
+  → fonction `get_search_db()`  
+  - Modifier :
+    - `user`
+    - `password`
+
+Ces identifiants doivent correspondre à votre configuration MySQL locale.
+
+---
+
+📌 Une fois ces étapes terminées, le backend sera pleinement fonctionnel pour :
+- l’authentification des utilisateurs
+- la recherche d’animaux depuis la Home Page
+
 ### 🔹 Organisation du backend
 Dans la branche du projet :
 
