@@ -17,9 +17,10 @@ Cette branche contient :
   - le fonctionnement du projet  
   - l’objectif  
   - la logique globale  
-- 🗄️ **Deux fichiers `.sql`** correspondant aux bases de données utilisées pour le backend  
+
 ### 🔹 2. **Ani-match_web_page** :
   - contient l’intégralité du projet **frontend et backend**
+  - 🗄️ **Deux fichiers `.sql`** correspondant aux bases de données utilisées pour le backend  dans le fichier **backend**
 
 ---
 
