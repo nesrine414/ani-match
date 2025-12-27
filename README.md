@@ -122,8 +122,12 @@ Lancer le serveur :
 ```
 python app.py
 ```
-📌 Le backend fonctionne sur le port 5000 /n
-🚀 Lancement du projet (Frontend)
+📌 Le backend fonctionne sur le port 5000 
+```
+```
+###  🚀 Lancement du projet (Frontend)
+```
+```
 #✔️ Installation
 ```
 git clone <repository-url>
@@ -141,7 +145,11 @@ npm run build
 👥 Contributeurs
 
 @nesrine414
+```
+```
 @Amaal122 (Amal Bouguila)
+```
+```
 @eslem10
 
 
