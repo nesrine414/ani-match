@@ -1,69 +1,146 @@
-# 🐾 AniMatch --- README
+# 🐾 AniMatch – Project Documentation
 
-## 📌 1. Choix du framework
+## 📌 Présentation du projet
 
-Pour le développement du site web AniMatch, nous avons choisi
-**React.js**.\
-Ce choix s'explique par plusieurs raisons :
+**AniMatch** est une plateforme web dédiée à l’adoption d’animaux.  
+Le projet a pour objectif de faciliter la recherche d’animaux à adopter grâce à une interface moderne, intuitive et dynamique, tout en intégrant un système de gestion des utilisateurs.
 
--   **Performance élevée** grâce au Virtual DOM.\
--   **Composants réutilisables** facilitant la maintenance.\
--   **Écosystème moderne** avec Vite pour un développement rapide.\
--   **Idéal pour un site dynamique** comme AniMatch.
+---
 
-------------------------------------------------------------------------
+## 🌿 Branches Overview
 
-## 📌 2. Fonctionnalités développées
+Le projet contient **2 branches principales** :
 
-### 🔹 Interface utilisateur moderne
+### 🔹 1. main
+Cette branche contient :
+- 📄 Un fichier **README** expliquant :
+  - le fonctionnement du projet  
+  - l’objectif  
+  - la logique globale  
+- 🗄️ **Deux fichiers `.sql`** correspondant aux bases de données utilisées pour le backend  
+- 📁 **Ani-match_web_page** :
+  - contient l’intégralité du projet **frontend et backend**
 
--   Pages : Accueil, Adoption, Services, Contact...
--   Design responsive (mobile & desktop).
+---
 
-### 🔹 Composants clés
+## 🧩 Description du projet
 
--   Hero section.
--   Cartes d'animaux.
--   Navigation dynamique.
--   Footer.
+### 🎨 Interfaces utilisateur modernes
+AniMatch propose une interface moderne et responsive avec les pages suivantes :
+
+- Home Page  
+- About Us  
+- Adopt  
+- Sign In  
+- Sign Up  
+- Search Result  
+- Pet Profile  
+- User Profile  
+
+Toutes les interfaces sont conçues pour offrir une expérience utilisateur fluide sur **desktop et mobile**.
+
+---
+
+## 🧱 Choix du framework
+
+Pour le développement du site web **AniMatch**, nous avons choisi **React.js**.
+
+### 🎯 Pourquoi React.js ?
+- ⚡ Haute performance grâce au **Virtual DOM**
+- ♻️ Composants réutilisables facilitant la maintenance
+- 🚀 Développement rapide avec **Vite**
+- 🔧 Adapté aux applications web dynamiques
+
+---
+
+## ⚙️ Fonctionnalités développées
+
+### 🔹 Frontend
+- Toutes les pages citées ci-dessus sont **entièrement développées**
+- Navigation fluide entre les pages
+- Design responsive et moderne
+
+---
 
 ### 🔹 Gestion des données
 
--   Chargement d'informations (images, descriptions...)
--   Préparation pour future API adoption.
+Le projet utilise **MySQL** avec **deux bases de données** :
 
-### 🔹 Organisation du code
+- 🗄️ `animatchdb`  
+  → utilisée pour :
+  - Sign In
+  - Sign Up
+  - Gestion des utilisateurs
 
--   `/components`
--   `/assets`
--   `/pages`
+- 🗄️ `animatchsearchdb`  
+  → utilisée pour :
+  - la barre de recherche des animaux dans AniMatch
 
-------------------------------------------------------------------------
+---
 
-## 📌 3. Étapes de lancement du projet
+## 🖥️ Backend (Flask – Python)
 
-### ✔️ Installation
+### 🔹 Technologies utilisées
+- **Flask (Python)** pour le développement de l’API
+- **MySQL** pour la gestion des données
+- API REST pour la communication avec le frontend
 
-``` bash
-git clone <lien-du-repo>
+### 🔹 Fonctionnalités backend
+Le backend est :
+- ✅ Fonctionnel pour :
+  - le processus de **Sign In**
+  - le processus de **Sign Up**
+  - la **barre de recherche** sur la Home Page
+- ⚠️ Les APIs des autres pages sont déjà créées pour le frontend, mais ne sont pas encore entièrement fonctionnelles
+
+---
+
+### 🔹 Organisation du backend
+Dans la branche du projet :
+
+- 📁 `backend/`  
+  - contient toutes les APIs développées avec Flask
+- 📁 `app/`  
+  - contient le fichier principal `app.py`
+- 📄 `requirements.txt`  
+  - contient tous les modules nécessaires au fonctionnement du backend
+
+---
+
+### ▶️ Lancer le backend
+
+1. Accéder au dossier `app` :
+```bash 
+cd backend/app
+```
+Installer les dépendances :
+```
+pip install -r requirements.txt
+```
+
+Lancer le serveur :
+```
+python app.py
+```
+📌 Le backend fonctionne sur le port 5000
+###🚀 Lancement du projet (Frontend)
+#✔️ Installation
+```
+git clone <repository-url>
 cd animatch-website
 npm install
 ```
-
-### ✔️ Lancer en développement
-
-``` bash
+#✔️ Lancer en mode développement
+```
 npm run dev
 ```
-
-### ✔️ Build production
-
-``` bash
+#✔️ Build production
+```
 npm run build
 ```
+##👥 Contributeurs
 
-### ✔️ Prévisualisation
+@nesrine414
+@Amaal122 (Amal Bouguila)
 
-``` bash
-npm run preview
-```
+
