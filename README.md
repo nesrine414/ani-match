@@ -123,15 +123,15 @@ Lancer le serveur :
 python app.py
 ```
 📌 Le backend fonctionne sur le port 5000 
-```
-```
+
 ###  🚀 Lancement du projet (Frontend)
-```
-```
-#✔️ Installation
+
 ```
 git clone <repository-url>
 cd animatch-website
+```
+#✔️ Installation
+```
 npm install
 ```
 ✔️ Lancer en mode développement
@@ -145,11 +145,9 @@ npm run build
 👥 Contributeurs
 
 @nesrine414
-```
-```
+
 @Amaal122 (Amal Bouguila)
-```
-```
+
 @eslem10
 
 
