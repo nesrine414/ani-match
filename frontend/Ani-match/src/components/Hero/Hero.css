@@ -5,7 +5,7 @@
   position: relative;
   width: 100%;
   height: 420px;
-  background-image: url("../../assets/hero-bg.jpg"); /* 👈 حط صورة */
+  background-image: url("../../assets/hero-bg.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -19,8 +19,8 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    rgba(0, 0, 0, 0.45),
-    rgba(0, 0, 0, 0.45)
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55)
   );
   z-index: 1;
 }
@@ -34,22 +34,36 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 26px;
   align-items: center;
   width: 100%;
   padding: 0 20px;
 }
 
-/* SEARCH BAR */
+/* =========================
+   TITLE
+========================= */
+.hero-title {
+  font-family: "Kirang Haerang", cursive;
+  font-size: 46px;
+  color: "white";
+  margin: 0;
+  letter-spacing: 1px;
+
+}
+
+/* =========================
+   SEARCH BAR
+========================= */
 .searchbar {
   width: 540px;
   height: 56px;
-  background: white;
+  background: #ffffff;
   border-radius: 30px;
   display: flex;
   align-items: center;
   padding: 0 22px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
 .searchbar input {
@@ -62,15 +76,7 @@
 .search-icon {
   font-size: 18px;
   margin-right: 14px;
-}
-
-/* TITLE */
-.hero-title {
-  font-family: "Kirang Haerang", cursive;
-  font-size: 44px;
-  color: white;
-  margin: 0;
-  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  color: #555;
 }
 
 /* =========================

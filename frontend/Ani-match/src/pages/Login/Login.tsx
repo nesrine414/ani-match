@@ -26,35 +26,34 @@ function LoginPage(): ReactElement {
   const navigate = useNavigate();
 
   const handleLogin = async (): Promise<void> => {
-  try {
-    const res = await axios.post<LoginResponse>(
-      "http://localhost:5000/api/login",
-      { email, password }
-    );
+    try {
+      const res = await axios.post<LoginResponse>(
+        "http://localhost:5000/api/login",
+        { email, password }
+      );
 
-    setUserName(res.data.user.full_name);
-    setShowSuccess(true);
-    localStorage.setItem("token", res.data.token);
+      setUserName(res.data.user.full_name);
+      setShowSuccess(true);
+      localStorage.setItem("token", res.data.token);
 
-    setTimeout(() => {
-      setShowSuccess(false);
-      navigate("/"); // 🔥 redirect لصفحة accueil
-    }, 3000);
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate("/"); 
+      }, 3000);
 
-  } catch (err: unknown) {
-    const error = err as any;
-    alert(error?.response?.data?.message || "Login failed. Please try again.");
-  }
-};
-
+    } catch (err: unknown) {
+      const error = err as any;
+      alert(error?.response?.data?.message || "Login failed. Please try again.");
+    }
+  };
 
   return (
     <div className="page">
-      {/* 🎉 MESSAGE DE SUCCÈS */}
+      {/* 🎉 MESSAGE DE SUCCÈS - THEME ANI-MATCH */}
       {showSuccess && (
         <div className="success-overlay">
           <div className="success-message">
-            <div className="success-icon">✨</div>
+            <div className="success-icon">🐶</div>
             <h1>Welcome Back!</h1>
             <h2>{userName}</h2>
             <p>🎉 Login Successful 🎉</p>

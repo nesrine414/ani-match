@@ -1,18 +1,20 @@
 import React from "react";
 import "./About.css";
 import logo from "../../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const About: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="about-page">
       
-      {/* Top Left Logo */}
+      {/* Header */}
       <img src={logo} alt="AniMatch Logo" className="corner-logo" />
       
-      {/* Top Right User Icon (SVG) */}
-      <div className="corner-user">
-        <svg width="60" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g fill="#3098B7"> {/* J'ai mis le bleu de ton thème */}
+      <div className="corner-user" onClick={() => navigate("/login")}>
+        <svg width="60" height="60" viewBox="0 0 100 60" fill="none">
+          <g fill="#3098B7">
             <rect x="0" y="15" width="25" height="3" rx="1.5"/>
             <rect x="0" y="25" width="25" height="3" rx="1.5"/>
             <rect x="0" y="35" width="25" height="3" rx="1.5"/>
@@ -23,62 +25,159 @@ const About: React.FC = () => {
       </div>
 
       <main className="about-main">
-        <h1 className="about-title">Who are we?</h1>
-        
-        {/* Nouvelle structure : Carte avec Texte + Image */}
-        <div className="about-card">
-          <div className="about-text-content">
-            <p>
-              At <strong>Ani-Match</strong>, we are a team of passionate animal lovers, 
-              rescuers, and tech enthusiasts dedicated to bridging the gap between 
-              homeless pets and loving families.
+        {/* Hero Section avec titre stylisé */}
+        <div className="hero-section">
+          <div className="hero-content">
+            <span className="hero-badge">🐾 About Us</span>
+            <h1 className="hero-title">
+              Who are <span className="gradient-text">we?</span>
+            </h1>
+            <p className="hero-subtitle">
+              Bridging hearts and paws, one match at a time
             </p>
-            <p>
-              We believe every paw deserves a home. Our mission is to make adoption 
-              simple, transparent, and joyful for everyone involved.
-            </p>
-            
           </div>
-          
-          <div className="about-image-content">
-            {/* Image d'exemple de haute qualité (tu pourras la changer) */}
-            <img 
-              src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80" 
-              alt="Our Team and Pets" 
-            />
+        </div>
+
+        {/* Main Content Card - Disposition plus dynamique */}
+        <div className="content-wrapper">
+          <div className="about-grid">
+            {/* Grande image à gauche */}
+            <div className="image-section">
+              <div className="image-frame">
+                <img 
+                  src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80" 
+                  alt="Happy dog with flower" 
+                />
+                <div className="image-overlay">
+                  <div className="overlay-badge">
+                    <span className="heart-icon">❤️</span>
+                    <span>500+ Adoptions</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Texte à droite avec style cards */}
+            <div className="text-section">
+              <div className="info-card primary-card">
+                <div className="card-icon">🏠</div>
+                <h3>Our Mission</h3>
+                <p>
+                  At <strong>Ani-Match</strong>, we are a team of passionate animal lovers, 
+                  rescuers, and tech enthusiasts dedicated to bridging the gap between 
+                  homeless pets and loving families.
+                </p>
+              </div>
+
+              <div className="info-card secondary-card">
+                <div className="card-icon">💙</div>
+                <h3>Our Vision</h3>
+                <p>
+                  We believe every paw deserves a home. Our mission is to make adoption 
+                  simple, transparent, and joyful for everyone involved.
+                </p>
+              </div>
+
+              <div className="stats-row">
+                <div className="stat-item">
+                  <div className="stat-number">500+</div>
+                  <div className="stat-label">Happy Adoptions</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">50+</div>
+                  <div className="stat-label">Rescue Partners</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-number">24/7</div>
+                  <div className="stat-label">Support</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section valeurs avec icônes */}
+        <div className="values-section">
+          <h2 className="section-title">Why Choose Us?</h2>
+          <div className="values-grid">
+            <div className="value-card">
+              <div className="value-icon">🔍</div>
+              <h4>Transparency</h4>
+              <p>Complete pet profiles with health records and history</p>
+            </div>
+            <div className="value-card">
+              <div className="value-icon">🤝</div>
+              <h4>Support</h4>
+              <p>Guidance throughout the adoption journey</p>
+            </div>
+            <div className="value-card">
+              <div className="value-icon">💚</div>
+              <h4>Care</h4>
+              <p>Post-adoption follow-up and resources</p>
+            </div>
           </div>
         </div>
       </main>
 
-      {/* Footer Moderne */}
+      {/* Footer amélioré */}
       <footer className="about-footer">
-        <div className="footer-grid">
-            
-            {/* Colonne 1 : Marque */}
+        <div className="footer-content">
+          <div className="footer-grid">
             <div className="footer-col brand-col">
-                <h3>Ani-Match</h3>
-                <p>Connecting hearts & paws.</p>
+              <h3>Ani-Match</h3>
+              <p className="tagline">🐾 Connecting hearts & paws</p>
+              <p className="description">
+                Making the world a better place, one adoption at a time.
+              </p>
             </div>
 
-            {/* Colonne 2 : Contact */}
-            <div className="footer-col contact-col">
-                <h4>Contact Us</h4>
-                <div className="contact-row">
-                    <span>📞</span> <p>+216 56889 6789</p>
-                </div>
-                <div className="contact-row">
-                    <span>✉️</span> <p>pets@pets.tn</p>
-                </div>
+            <div className="footer-col">
+              <h4>Quick Links</h4>
+              <ul className="footer-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/adopt">Adopt</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
             </div>
 
-            {/* Colonne 3 : Social & Copyright */}
-            <div className="footer-col social-col">
-                <h4>Follow Us</h4>
-                <div className="social-icons">
-                    <span>Facebook</span> • <span>Instagram</span>
+            <div className="footer-col">
+              <h4>Contact Us</h4>
+              <div className="contact-info">
+                <div className="contact-item">
+                  <span className="contact-icon">📞</span>
+                  <span>+216 56889 6789</span>
                 </div>
-                
+                <div className="contact-item">
+                  <span className="contact-icon">✉️</span>
+                  <span>pets@pets.tn</span>
+                </div>
+                <div className="contact-item">
+                  <span className="contact-icon">📍</span>
+                  <span>Tunis, Tunisia</span>
+                </div>
+              </div>
             </div>
+
+            <div className="footer-col">
+              <h4>Follow Us</h4>
+              <div className="social-links">
+                <a href="#" className="social-btn">
+                  <span>📘</span> Facebook
+                </a>
+                <a href="#" className="social-btn">
+                  <span>📸</span> Instagram
+                </a>
+                <a href="#" className="social-btn">
+                  <span>🐦</span> Twitter
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="footer-bottom">
+            <p>© 2025 Ani-Match. Made with ❤️ for animals.</p>
+          </div>
         </div>
       </footer>
     </div>
