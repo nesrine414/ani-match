@@ -127,7 +127,7 @@ python app.py
 ###  🚀 Lancement du projet (Frontend)
 
 ```
-git clone <repository-url>
+git clone https://github.com/nesrine414/ani-match.git
 cd animatch-website
 ```
 #✔️ Installation
