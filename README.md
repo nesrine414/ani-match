@@ -100,8 +100,8 @@ Dans la branche du projet :
 
 - 📁 `backend/`  
   - contient toutes les APIs développées avec Flask
-- 📁 `app/`  
-  - contient le fichier principal `app.py`
+   - contient le fichier principal `app.py`
+  
 - 📄 `requirements.txt`  
   - contient tous les modules nécessaires au fonctionnement du backend
 
@@ -109,9 +109,9 @@ Dans la branche du projet :
 
 ### ▶️ Lancer le backend
 
-1. Accéder au dossier `app` :
+1. Accéder au dossier `backend` :
 ```bash 
-cd backend/app
+cd backend
 ```
 Installer les dépendances :
 ```
