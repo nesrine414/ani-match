@@ -128,7 +128,7 @@ python app.py
 
 ```
 git clone https://github.com/nesrine414/ani-match.git
-cd animatch-website
+cd .\frontend
 ```
 #✔️ Installation
 ```
@@ -136,7 +136,7 @@ npm install
 ```
 ✔️ Lancer en mode développement
 ```
-cd .\frontend\Ani-match\src\pages
+cd .Ani-match\src\pages
 npm run dev
 ```
 ✔️ Build production
