@@ -136,6 +136,7 @@ npm install
 ```
 ✔️ Lancer en mode développement
 ```
+cd .\frontend\Ani-match\src\pages
 npm run dev
 ```
 ✔️ Build production
