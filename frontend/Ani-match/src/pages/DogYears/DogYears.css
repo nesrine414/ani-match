@@ -1,0 +1,329 @@
+/* Réutilise les mêmes styles de base que AdoptionChecklist.css */
+.dog-years-page {
+  position: relative;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.corner-logo {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  width: 140px;
+  z-index: 100;
+}
+
+.corner-user {
+  position: absolute;
+  top: 35px;
+  right: 40px;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.2s;
+}
+
+.corner-user:hover {
+  transform: scale(1.1);
+}
+
+.dog-years-hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+}
+
+.dog-years-content {
+  max-width: 1000px;
+  margin: -80px auto 0;
+  position: relative;
+  z-index: 10;
+  background: white;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 800;
+  margin: 0;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: white;
+  border: 2px solid #3098B7;
+  border-radius: 25px;
+  color: #3098B7;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+  background: #3098B7;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(48, 152, 183, 0.3);
+}
+
+.intro-text {
+  margin-bottom: 50px;
+  padding: 30px;
+  background: #f8fbff;
+  border-radius: 15px;
+  border-left: 5px solid #3098B7;
+}
+
+.intro-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #555;
+  margin: 0 0 15px 0;
+}
+
+.intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Age Tables Section */
+.age-tables-section {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #3098B7;
+}
+
+.section-intro {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.age-table-card {
+  background: #ffffff;
+  border: 2px solid #e8f4f8;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.age-table-card:hover {
+  border-color: #3098B7;
+  box-shadow: 0 5px 20px rgba(48, 152, 183, 0.1);
+}
+
+.table-title {
+  color: #3098B7;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.breeds-list {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.age-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #f8fbff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: white;
+}
+
+.header-row {
+  background: #3098B7;
+  color: white;
+  font-weight: 700;
+}
+
+.table-cell {
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.table-row:not(.header-row):hover {
+  background: #f0f9ff;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, #3098B7 0%, #5bb4d4 100%);
+  border-radius: 20px;
+  color: white;
+  margin-top: 50px;
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.cta-section p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.95;
+}
+
+.cta-btn {
+  padding: 15px 40px;
+  background: white;
+  color: #3098B7;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dog-years-footer {
+  background-color: #3098B7;
+  color: white;
+  padding: 50px 40px 30px;
+  margin-top: 80px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+
+.footer-col h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.footer-col h4 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #5bb4d4;
+}
+
+.footer-col p {
+  margin: 8px 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .dog-years-hero {
+    height: 250px;
+  }
+
+  .dog-years-content {
+    margin: -50px 20px 0;
+    padding: 30px 25px;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .content-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .table-title {
+    font-size: 1.2rem;
+  }
+
+  .age-table-card {
+    padding: 20px;
+  }
+
+  .table-cell {
+    padding: 12px 10px;
+    font-size: 0.9rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .corner-logo {
+    width: 100px;
+    left: 20px;
+    top: 20px;
+  }
+
+  .corner-user {
+    right: 20px;
+    top: 25px;
+  }
+
+  .cta-section {
+    padding: 40px 20px;
+  }
+
+  .cta-section h3 {
+    font-size: 1.5rem;
+  }
+}

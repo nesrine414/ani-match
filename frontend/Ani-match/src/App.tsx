@@ -15,6 +15,11 @@ import PetProfile from "./pages/PetProfile/PetProfile";
 import PetProfile2 from "./pages/PetProfile2/PetProfile2";
 import Profile from "./pages/Profile/Profile";
 import SearchResult from "./pages/Search/SearchResult";
+import AdoptionChecklist from "./pages/AdoptionChecklist/AdoptionChecklist";
+import DogYears from "./pages/DogYears/DogYears";
+import AdoptionFAQs from "./pages/AdoptionFAQs/AdoptionFAQs";
+
+
 
 import "./App.css";
 
@@ -36,6 +41,13 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<AniMatchSignup />} />
+        <Route path="/adoption-checklist" element={<AdoptionChecklist />} />
+        <Route path="/dog-years" element={<DogYears />} />
+        <Route path="/adoption-faqs" element={<AdoptionFAQs />} />
+        
+
+       
+        
 
         <Route path="/pet-profile" element={<PetProfile />} />
         <Route path="/pet-profile-2" element={<PetProfile2 />} />
